@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 
+
 const TURNS = {
   X: 'x',
   O: 'o'
@@ -53,6 +54,16 @@ function App() {
     return null
   }
 
+  const resetGame = () => {
+    setBoard(Array(9).fill(null))
+    setTurn(TURNS.X)
+    setWinner(null)
+  }
+  
+  const checkEndGame = (newBoard) => {
+    return newBoard.every((square) => square !== null)
+  }
+
   const updateBoard = (index) => {
     // avoid replacing a filled square or if there's a winner
     if (board[index] || winner) return
@@ -67,9 +78,11 @@ function App() {
     setTurn(newTurn)
 
     // check for winners
-    const newWinner = checkWinner(newBoard) 
+    const newWinner = checkWinner(newBoard)
     if (newWinner) {
       setWinner(newWinner)
+    } else if (checkEndGame(newBoard)) {
+      setWinner(false) // tie
     }
 
   }
@@ -77,15 +90,16 @@ function App() {
   return (
     <main className='board'>
       <h1>Tic tac toe</h1>
+      <button onClick={resetGame}>Game reset</button>
       <section className='game'>
         {
-          board.map((_, index) => {
+          board.map((square, index) => {
             return (
               <Square
                 key={index}
                 index={index}
                 updateBoard={updateBoard}>
-                {board[index]}
+                {square}
 
               </Square>
             )
@@ -104,22 +118,24 @@ function App() {
               <h2>
                 {
                   winner === false
-                  ? 'Tie'
-                  : 'Won' + winner
+                    ? 'Tie'
+                    : 'Won'
                 }
               </h2>
+              <header className='win'>
+                {winner && <Square>{winner}</Square>}
+              </header>
+
+              <footer>
+                <button onClick={resetGame}>Restart</button>
+              </footer>
+
             </div>
 
-            <header className='win'>
-              {winner && <Square>{winner}</Square>}
-            </header>
 
-            <footer>
-              <button>Restart</button>
-            </footer>
           </section>
 
-        ) 
+        )
       }
     </main>
   )
