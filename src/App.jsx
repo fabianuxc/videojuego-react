@@ -49,19 +49,24 @@ function App() {
         return boardToCheck[a]
       }
     }
+
+    return null
   }
 
   const updateBoard = (index) => {
-
+    // avoid replacing a filled square or if there's a winner
     if (board[index] || winner) return
 
+    // update board
     const newBoard = [...board]
     newBoard[index] = turn
     setBoard(newBoard)
 
+    // change turn
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X
     setTurn(newTurn)
 
+    // check for winners
     const newWinner = checkWinner(newBoard) 
     if (newWinner) {
       setWinner(newWinner)
@@ -91,6 +96,31 @@ function App() {
         <Square isSelected={turn === TURNS.X}>{TURNS.X}</Square>
         <Square isSelected={turn === TURNS.O}>{TURNS.O}</Square>
       </section>
+
+      {
+        winner !== null && (
+          <section className='winner'>
+            <div className="text">
+              <h2>
+                {
+                  winner === false
+                  ? 'Tie'
+                  : 'Won' + winner
+                }
+              </h2>
+            </div>
+
+            <header className='win'>
+              {winner && <Square>{winner}</Square>}
+            </header>
+
+            <footer>
+              <button>Restart</button>
+            </footer>
+          </section>
+
+        ) 
+      }
     </main>
   )
 }
