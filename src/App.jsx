@@ -15,13 +15,11 @@ function App() {
       <ul>
         <li><a href='/'>Juego</a></li>
         <li><a href='/apiCall'>API Call</a></li>
-        <li><a href='/movieFinder'>Movie Finder</a></li>
       </ul>
       
     </header>
       { currentPath === '/' && <Game />}
       { currentPath === '/apiCall' && <ApiExample />}
-      { currentPath === '/movieFinder' && <MovieFinder />}
     </>
   )
 }
