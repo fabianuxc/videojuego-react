@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import Game from './pages/Game'
-import { ApiExample } from './pages/ApiExample'
-import MovieFinder from './pages/MovieFinder'
+
 import './assets/index.css'
 
 
@@ -14,13 +13,11 @@ function App() {
     <header>
       <ul>
         <li><a href='/'>Juego</a></li>
-        <li><a href='/apiCall'>API Call</a></li>
+     
       </ul>
       
     </header>
-      { currentPath === '/' && <Game />}
-      { currentPath === '/apiCall' && <ApiExample />}
-    </>
+      { currentPath === '/' && <Game />}    </>
   )
 }
 
